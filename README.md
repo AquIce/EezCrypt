@@ -1,2 +1,2 @@
-# eezCrypt
+# EezCrypt
 An easy crypting system
