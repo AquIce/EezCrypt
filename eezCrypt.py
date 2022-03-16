@@ -1,11 +1,13 @@
 import os
 import random
 
+print('------------------------\n-  eezCrypt Algorythm  -\n------------------------')
+
 seed = 0
 fileToEncrypt = input ('Name of the file to encrypt : ')
 mode = 'r'
 
-# ------------------------------------
+# ----------------------------------------------------------------------------------------
 
 def generateKey(bits):
 	key = ''
@@ -18,16 +20,6 @@ def generateKey(bits):
 	set = (key, seed)
 
 	return set
-
-def cryptKey(set):
-	key = set[0]
-	seed = set[1]
-	return key[:seed]
-
-def getSettings(set):
-	key = set[0]
-	seed = set[1]
-	return key[seed:-4]
 
 # ----------------------------------------------------------------------------------------
 
@@ -62,34 +54,44 @@ def compareValues(len_values, j):
 	
 # ----------------------------------------------------------------------------------------
 
-print('------------------------\n-  eezCrypt Algorythm  -\n------------------------')
-
 print('\n\nRepo : ' + os.getcwd())
 
 if os.path.exists(fileToEncrypt):
 	with open(fileToEncrypt, mode) as file :
 		bin = file.read().encode('utf-8').hex()
 		print('\n\n')
-		print(bin)
+		# print(bin)
 
 	datas = generateKey(256)
 		
-	print('\n\nCrypt --------------------\n')
-	print(cryptKey(datas))
-		
-	print('\n\nSettings --------------------\n')
-	print(getSettings(datas))
-		
 	unc_values = getValues(bin)
+	for i in range(len(unc_values)):
+		print(unc_values[i])
 	key_values = getValues(datas[0])
 
-  result_values = [0] * (len(unc_values)+1)
+	result_values = [0] * (len(unc_values)+1)
 		
 	for i in range(len(unc_values)):
 		j = i
 		while j >= len(key_values):
 			j -= len(key_values)
-		result_values[i] = str(int(unc_values[i]) + int(key_values[j]))
+		result_values[i] = str(
+int(unc_values[i]) + int(key_values[j]))
+		print(result_values[i])
+		result_lengths = [0] * len(result_values)
+		for i in range(len(result_values)):
+			result_lengths[i] = len(str(result_values[i]))
+			print(result_lengths[i])
 
-else:
-    print("This file doesn't exist"9
+# ----------------------------------------------------
+
+	mode = 'w'
+	with open(fileToEncrypt, mode) as file:
+		for i in range(len(result_values)):
+			file.write(str(result_values[i]))
+
+	with open('key.txt', 'x') as file:
+		file.write(datas[0])
+
+
+else: print("This file doesn't exist")
