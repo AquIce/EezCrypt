@@ -2,8 +2,10 @@ import os
 import random
 
 seed = 0
-fileToEncrypt = 'file.txt'
+fileToEncrypt = input ('Name of the file to encrypt : ')
 mode = 'r'
+
+# ------------------------------------
 
 def generateKey(bits):
 	key = ''
@@ -51,6 +53,15 @@ def getValues(string):
 	
 # ----------------------------------------------------------------------------------------
 
+def compareValues(len_values, j):
+	if(j>=len_values-1):
+		j -= len_values
+		if(j>=len_values):
+			compareValues(len_values, j)
+	return j
+	
+# ----------------------------------------------------------------------------------------
+
 print('------------------------\n-  eezCrypt Algorythm  -\n------------------------')
 
 print('\n\nRepo : ' + os.getcwd())
@@ -62,33 +73,23 @@ if os.path.exists(fileToEncrypt):
 		print(bin)
 
 	datas = generateKey(256)
+		
 	print('\n\nCrypt --------------------\n')
 	print(cryptKey(datas))
+		
 	print('\n\nSettings --------------------\n')
 	print(getSettings(datas))
 		
 	unc_values = getValues(bin)
 	key_values = getValues(datas[0])
 
-	result_values = [0] * len(unc_values)
-	if(len(unc_values)>len(key_values)):
-		for i in range(len(unc_values)):
-			j = i
-			if(j>=len(key_values)):
-				j -= len(key_values)
-				if(j>=len(key_values)):
-					j -= len(key_values)
-					if(j>=len(key_values)):
-						j -= len(key_values)
-			print('--s')
-			print(i)
-			print(j)
-			print('--e')
-			result_values[i] = unc_values[i] + key_values[j]
-			print(result_values[i])
+  result_values = [0] * (len(unc_values)+1)
+		
+	for i in range(len(unc_values)):
+		j = i
+		while j >= len(key_values):
+			j -= len(key_values)
+		result_values[i] = str(int(unc_values[i]) + int(key_values[j]))
 
-	
-
-			
 else:
-    print("This file doesn't exist")
+    print("This file doesn't exist"9
